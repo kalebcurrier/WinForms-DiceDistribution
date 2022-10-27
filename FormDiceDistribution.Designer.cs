@@ -74,7 +74,7 @@
             this.listBoxResults.ItemHeight = 25;
             this.listBoxResults.Location = new System.Drawing.Point(411, 79);
             this.listBoxResults.Name = "listBoxResults";
-            this.listBoxResults.Size = new System.Drawing.Size(235, 179);
+            this.listBoxResults.Size = new System.Drawing.Size(422, 554);
             this.listBoxResults.TabIndex = 4;
             // 
             // buttonExecute
@@ -85,12 +85,13 @@
             this.buttonExecute.TabIndex = 5;
             this.buttonExecute.Text = "Go";
             this.buttonExecute.UseVisualStyleBackColor = true;
+            this.buttonExecute.Click += new System.EventHandler(this.buttonExecute_Click);
             // 
             // FormDiceDistrubtion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(723, 460);
+            this.ClientSize = new System.Drawing.Size(877, 706);
             this.Controls.Add(this.buttonExecute);
             this.Controls.Add(this.listBoxResults);
             this.Controls.Add(this.textBoxNumberOfThrows);
