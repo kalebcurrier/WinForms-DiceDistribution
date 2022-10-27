@@ -1,4 +1,21 @@
-﻿using System;
+﻿/* ********************************************************************
+ * Projct:      Dice Distribution
+ * File:        KMCThrow.cs
+ * Language:    C#
+ * 
+ * Desription:  This will roll dice or a singular die and return values
+ *              to be displayed in a text box
+ *              
+ * College:     Husson University
+ * Course:      IT 325
+ * 
+ * Edit History:
+ * Ver   Who Date       Notes
+ * ----- --- ---------- -----------------------------------------------
+ * 0.1   KMC 10/26/2022 - initial writing
+ *                      - added data types to be used in KMCDiceRoller
+ * *******************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +23,9 @@ using System.Threading.Tasks;
 
 namespace DiceDistribution
 {
+    /// <summary>
+    /// This class will act as a base for Throw (roll)
+    /// </summary>
     internal class KMCThrow
     {
         #region data

@@ -1,4 +1,25 @@
-﻿using System;
+﻿/* ********************************************************************
+ * Projct:      Dice Distribution
+ * File:        FormDiceDistribution.cs
+ * Language:    C#
+ * 
+ * Desription:  This will roll dice or a singular die and return values
+ *              to be displayed in a text box
+ *              
+ * College:     Husson University
+ * Course:      IT 325
+ * 
+ * Edit History:
+ * Ver   Who Date       Notes
+ * ----- --- ---------- -----------------------------------------------
+ * 0.1   KMC 10/26/2022 - initial writing
+ *                      - added button
+ *                      - added button functionality to be used
+ *                      - added error trapping to not allow white
+ *                      spaces and improper ints
+ *                      - cleaned up and added more accurate comments
+ * *******************************************************************/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,14 +42,26 @@ namespace DiceDistribution
         {
 
         }
-
+        /// <summary>
+        /// This button executes the users inputed values
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonExecute_Click(object sender, EventArgs e)
         {
             try
             {
+                // initialize values to be used later
                 int numberOfThrows;
                 int numberOfDice;
+
+
                 // NumberOfThrows
+                
+                // Error trappinig for invalid characters used
+                // learned to do custom error trapping messages with links below
+                // used custom error messages so user knows WHERE they messed up
+                // FUN FACT: RE-Used this code from my random number generator! :D
                 try
                 {
                     numberOfThrows = Convert.ToInt32(textBoxNumberOfThrows.Text.Trim());
@@ -63,6 +96,8 @@ namespace DiceDistribution
 
                 // clear list each time you click button
                 listBoxResults.Items.Clear();
+
+                // loop through to get the length
                 for (int i = 0; i < rows.Length; i++)
                 {
                     listBoxResults.Items.Add(rows[i]);

@@ -13,7 +13,16 @@
  * Ver   Who Date       Notes
  * ----- --- ---------- -----------------------------------------------
  * 0.1   KMC 10/26/2022 - initial writing
- *                      - throws = rolls
+ *                      - added data types
+ *                      - added properties
+ *                      - added private methods
+ *                      - added methods
+ *                      - added button instancing
+ *                      - refactored math for percentages so we no
+ *                      longer returned "0%" every time
+ *                      - Added Sum, Min, Max, and Average
+ *                      - Went through and cleaned up code bloat and 
+ *                      added more specific comments.
  * *******************************************************************/
 using System;
 using System.Collections.Generic;
@@ -24,24 +33,31 @@ namespace DiceDistribution
     internal class KMCDiceRoller
     {
         #region data
+        // set random
         Random random = new Random();
+        // set throws
         KMCThrow[] throws;
+
         //https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-7.0
         // found how to use list here
-
         List<KMCThrow> stats;
         #endregion data
 
         #region properties
-        private int numberOfThrows = 0;
-        private int countOfThrows = 0;
-        private float AverageThrow = 0;
-        private int SumOfThrows = 0;
+        // all the properties required to be displayed
+        private int numberOfThrows = 0;      
+        private int countOfThrows = 0;      
+        private float AverageThrow = 0;     
+        private int SumOfThrows = 0;        
         private int MinimumThrow = 0;
         private int MaximumThrow = 0;
         #endregion properties
 
         #region constructor
+        /// <summary>
+        /// This constructor will manage data types to be used
+        /// </summary>
+        /// <param name="newNumberOfThrows"></param>
         public KMCDiceRoller(int newNumberOfThrows)
         {
             numberOfThrows = newNumberOfThrows;
@@ -52,7 +68,6 @@ namespace DiceDistribution
         #endregion constructor
 
         #region methods
-
 
         /// <summary>
         /// This method throws the dice, calculates the stats, and displays the stats.
@@ -102,10 +117,18 @@ namespace DiceDistribution
             AddThrow(sumOfDice);
         }
 
+        /// <summary>
+        /// This method will add a throw to the total throws
+        /// </summary>
+        /// <param name="sumOfDice"></param>
         private void AddThrow(int sumOfDice)
         {
             throws[countOfThrows++] = new KMCThrow(sumOfDice, 1);
         }
+
+        /// <summary>
+        /// This method will calculate the stats of the throw, percentages, etc.
+        /// </summary>
         private void CalculateThrows()
         {
             // populate stats List from throws array 
@@ -114,10 +137,13 @@ namespace DiceDistribution
             // add pecentages to stats
             CalculatePercentages();
 
-            
             // sort stats
             // https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=net-7.0
             // used this to figure out how to sort a list with a delegate
+            // NOTE: This was very difficult to figure out, this part alone took around
+            // 3 hours to manage.
+
+            // Use a sort to get order the result, using delegate
             stats.Sort(delegate (KMCThrow a, KMCThrow b)
             {
                 if (a.total > b.total)
@@ -137,12 +163,16 @@ namespace DiceDistribution
             // calculate average roll/throw
             AverageThrow = (float)SumOfThrows / numberOfThrows;
 
-            // calc
+            // obtain the minimum from the previously sorted list
             MinimumThrow = stats.First().total;
 
+            // obtain the maximum from the previously sorted list
             MaximumThrow = stats.Last().total;
         }
 
+        /// <summary>
+        /// This method will calcualte the percentage of the data
+        /// </summary>
         private void CalculatePercentages()
         {
             int totalCountOfAllThrows = 0;
@@ -159,7 +189,6 @@ namespace DiceDistribution
             {
                 stat.percentage = (float)stat.count / totalCountOfAllThrows * 100;
             }
-
         }
 
         /// <summary>
@@ -194,25 +223,40 @@ namespace DiceDistribution
                 {
                     stats.Add(new KMCThrow(throws[throwIndex].total, 1));
                 }
-            }
-            
+            }   
         }
 
+        /// <summary>
+        /// This method will display the throws and return the rows
+        /// </summary>
+        /// <returns>Rows of data to be displayed</returns>
         private String[] DisplayThrows()
         {
+            // Allow the rows to take count and 4 other values (avg, sum, min, max)
             String[] rows = new String[stats.Count + 4];
+
             int rowCount = 0;
+
+            // loop through each stat within the total number of stats, to display
             foreach (KMCThrow stat in stats)
             {
                 rows[rowCount++] = String.Format("Roll {0} - {1} Times - {2:0.00}%", stat.total, stat.count, stat.percentage);
             }
+            // format average throw
             rows[rowCount++] = String.Format("Average Throw: {0:0.00}", AverageThrow);
+
+            // format sum of throws
             rows[rowCount++] = String.Format("Sum of all Throws: {0}", SumOfThrows);
+
+            // format min of throws
             rows[rowCount++] = String.Format("Minimum Throw: {0}", MinimumThrow);
+
+            // format max of throws
             rows[rowCount++] = String.Format("Maximum Throw: {0}", MaximumThrow);
+
+            // return the rows to be displayed
             return rows;
         }
-
         #endregion private methods
     }
 }
